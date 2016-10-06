@@ -3,6 +3,7 @@ import ArticleList from './ArticleList'
 import Chart from './Chart'
 import NewArticleForm from './NewArticleForm'
 import Filter from './Filter'
+import MyDayPicker from "./MyDayPicker"
 
 class Container extends Component {
     static propTypes = {
@@ -17,6 +18,7 @@ class Container extends Component {
                 <ArticleList articles = {articles} />
                 <Chart />
                 <NewArticleForm />
+                <MyDayPicker />
             </div>
         )
     }

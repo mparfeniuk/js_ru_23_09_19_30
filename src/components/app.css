@@ -1,0 +1,24 @@
+.b-comment-form__group {
+    margin-top: 20px;
+}
+
+.b-comment-form__label {
+    display: block;
+}
+
+.b-comment-form__input,
+.b-comment-form__textarea {
+    box-sizing: border-box;
+    width: 500px;
+    padding: 5px;
+}
+
+.b-comment-form__submit {
+    padding: 5px 10px;
+    border: none;
+    line-height: 2;
+    color: #fff;
+    background-color: #0088cc;
+    width: 100px;
+    cursor: pointer;
+}
