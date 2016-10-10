@@ -29,6 +29,7 @@ class ArticleList extends Component {
 }
 
 export default connect(state => {
+    //ок, но еще по датам надо было сделать
     function filter(articles, selected){
         let ids = (selected && selected.length > 0) ? selected.map(item => item.value) : null
         return ids ? articles.filter(article => ids.includes(article.id)) : articles
