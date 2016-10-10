@@ -18,6 +18,7 @@ class ArticleList extends Component {
             <li key={article.id} >
                 <Article article = {article} isOpen = {isItemOpen(article.id)} openArticle = {toggleItem(article.id)} />
             </li>))
+        
 
         return (
             <ul>
@@ -27,6 +28,15 @@ class ArticleList extends Component {
     }
 }
 
-export default connect(state => ({
-    articles: state.articles
-}))(accordion(ArticleList))
+export default connect(state => {
+    function filter(articles, selected){
+        let ids = (selected && selected.length > 0) ? selected.map(item => item.value) : null
+        return ids ? articles.filter(article => ids.includes(article.id)) : articles
+    }
+
+    return {
+        articles: filter(state.articles, state.selected)
+    }
+})(accordion(ArticleList))
+
+
