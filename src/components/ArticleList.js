@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Article from './Article'
 import accordion from './../decorators/accordion'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 class ArticleList extends Component {
     static propTypes = {
@@ -30,13 +31,20 @@ class ArticleList extends Component {
 
 export default connect(state => {
     //ок, но еще по датам надо было сделать
-    function filter(articles, selected){
+    function filterByDate(articles, date_range){
+        return  date_range.from ?
+            articles.filter(item => moment(item.date).isSameOrAfter(date_range.from, 'day') && moment(item.date).isSameOrBefore(date_range.to, 'day')) : articles
+    }
+
+
+    function filterBySelect(articles, selected){
         let ids = (selected && selected.length > 0) ? selected.map(item => item.value) : null
         return ids ? articles.filter(article => ids.includes(article.id)) : articles
     }
 
+
     return {
-        articles: filter(state.articles, state.selected)
+        articles: filterByDate(filterBySelect(state.articles, state.selected), state.date_range)
     }
 })(accordion(ArticleList))
 

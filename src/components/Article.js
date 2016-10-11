@@ -5,6 +5,7 @@ import CSSTransition from 'react-addons-css-transition-group'
 import './animation.css'
 import { deleteArticle } from '../AC/articles'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 class Article extends Component {
     static propTypes = {
@@ -29,9 +30,11 @@ class Article extends Component {
 
         const body = isOpen ? <section>{article.text}<CommentList comments = {article.comments} ref = "commentList"/></section> : null
 
+        const date = moment(article.date)
+
         return (
             <div>
-                <h3 onClick = {openArticle}>{article.title}</h3>
+                <h3 onClick = {openArticle}>{article.title} / {date.format("ddd MMM DD YYYY")}</h3>
                 <a href = "#" onClick = {this.handleDelete}>delete me</a>
                 <CSSTransition
                     transitionName="article"
