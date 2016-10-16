@@ -4,3 +4,4 @@ export default store => next => action => {
     next(action)
     console.log('---', 'after dispatching', store.getState())
 }
+

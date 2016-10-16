@@ -28,7 +28,7 @@ class Article extends Component {
     render() {
         const { article, comments, isOpen, openArticle } = this.props
 
-        const body = isOpen ? <section>{article.text}<CommentList comments = {comments} ref = "commentList"/></section> : null
+        const body = isOpen ? <section>{article.text}<CommentList comments = {comments} article_id = {article.id} ref = "commentList"/></section> : null
 
         return (
             <div>

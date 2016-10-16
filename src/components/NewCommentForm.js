@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-
+import '../stylesheets/style.css'
+import { connect } from 'react-redux'
+import { addComment } from '../AC/comments'
 class NewCommentForm extends Component {
-    static propTypes = {
-    };
 
     state = {
         text: '',
@@ -15,22 +15,23 @@ class NewCommentForm extends Component {
 
     handleSubmit = ev => {
         ev.preventDefault()
-        console.log('---', this.state)
-        this.setState({
-            user: '',
-            text: ''
-        })
+        if(this.state.user == "" || this.state.text == "") return
+
+        const { addComment, article_id, id } = this.props
+        addComment(Object.assign({}, { article_id, id }, this.state))
     }
 
     render() {
         return (
             <form onSubmit = {this.handleSubmit}>
-                comment: <input type="text" value={this.state.text} onChange = {this.handleChange('text')}/>
-                comment: <input type="text" value={this.state.user} onChange = {this.handleChange('user')}/>
+                <label htmlFor="user">User:</label>
+                <input type="text" onChange={this.handleChange('user')} id="user"/>
+                <label htmlFor="text">Text:</label>
+                <textarea id="text" onChange={this.handleChange('text')} rows="4" cols="50"></textarea>
                 <input type = "submit"/>
             </form>
         )
     }
 }
 
-export default NewCommentForm
+export default connect(null, { addComment })(NewCommentForm)
