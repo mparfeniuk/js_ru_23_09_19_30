@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Article from './Article'
+import Loader from './Loader'
 import accordion from './../decorators/accordion'
 import { connect } from 'react-redux'
+import { loadAllArticles } from '../AC/articles'
 
 class ArticleList extends Component {
     static propTypes = {
@@ -11,8 +13,14 @@ class ArticleList extends Component {
         isItemOpen: PropTypes.func.isRequired
     };
 
+    componentDidMount() {
+        const { loaded, loading, loadAllArticles} = this.props
+        if (!loaded || !loading) loadAllArticles()
+    }
+
     render() {
-        const { articles, toggleItem, isItemOpen } = this.props
+        const { articles, loading, toggleItem, isItemOpen } = this.props
+        if (loading) return <Loader />
 
         const articleComponents = articles.map(article => (
             <li key={article.id} >
@@ -32,13 +40,15 @@ export default connect(state => {
     const selected = filters.get('selected')
     const { from, to } = filters.get('dateRange')
 
-    const articleArray = Object.keys(articles).map(id => articles[id])
+    const articleArray = articles.get('entities').valueSeq().toArray()
     const filteredArticles = articleArray.filter(article => {
         const published = Date.parse(article.date)
         return (!selected.length || selected.includes(article.id)) &&
             (!from || !to || (published > from && published < to))
     })
     return {
-        articles: filteredArticles
+        articles: filteredArticles,
+        loaded: articles.get('loaded'),
+        loading: articles.get('loading')
     }
-})(accordion(ArticleList))
+}, { loadAllArticles })(accordion(ArticleList))
