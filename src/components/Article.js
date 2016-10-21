@@ -23,7 +23,7 @@ class Article extends Component {
         const { article, isOpen, openArticle } = this.props
         const loader = article.loading ? <Loader /> : null
 
-        const body = isOpen ? <section>{loader}{article.text}<CommentList article = {article} ref = "commentList"/></section> : null
+        const body = isOpen && article.loaded ? <section>{loader}{article.text}<CommentList article = {article} ref = "commentList"/></section> : null
 
         return (
             <div>
