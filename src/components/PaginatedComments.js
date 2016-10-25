@@ -57,6 +57,7 @@ export default connect((state, {page, limit}) => {
         from: (page * limit) - limit,
         to: page * limit
     }
+    //плохой подход, не никаких гарантий, что на клиенте они в том же порядке, что и на сервере. Более того в Map вообще никакой порядок не гарантируют
     const filteredComments = state.comments.get('entities').filter((el, i) => i >= range.from && i < range.to)
     return {
         total: state.comments.get('total'),
